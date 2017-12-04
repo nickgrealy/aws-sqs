@@ -16,7 +16,7 @@
 
 package io.relution.jenkins.awssqs.model;
 
-import hudson.model.AbstractProject;
+import hudson.model.Job;
 import hudson.plugins.git.BranchSpec;
 import hudson.plugins.git.GitSCM;
 import hudson.scm.SCM;
@@ -34,7 +34,7 @@ import java.util.List;
 public class EventTriggerMatcherImpl implements EventTriggerMatcher {
 
     @Override
-    public boolean matches(final List<ExecuteJenkinsJobEvent> events, final AbstractProject<?, ?> job) {
+    public boolean matches(final List<ExecuteJenkinsJobEvent> events, final Job<?, ?> job) {
         if (events == null || job == null) {
             return false;
         }
@@ -132,19 +132,11 @@ public class EventTriggerMatcherImpl implements EventTriggerMatcher {
     private boolean isMultiScmAvailable() {
         final Jenkins jenkins = Jenkins.getInstance();
 
-        if (jenkins == null) {
-            return false;
-        }
-
         return jenkins.getPlugin("multiple-scms") != null;
     }
 
     private boolean isGitScmAvailable() {
         final Jenkins jenkins = Jenkins.getInstance();
-
-        if (jenkins == null) {
-            return false;
-        }
 
         return jenkins.getPlugin("git") != null;
     }
